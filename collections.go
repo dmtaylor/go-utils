@@ -2,6 +2,15 @@ package go_utils
 
 import "sync"
 
+// StableMap implements a single-threaded map function where elements are processed in order.
+func StableMap[K any, V any](in []K, f func(K) V) []V {
+	res := make([]V, len(in))
+	for i := 0; i < len(in); i++ {
+		res[i] = f(in[i])
+	}
+	return res
+}
+
 // ConcurrentMap implements a Map function concurrently. Passed function should be threadsafe, as it will
 // be called concurrently.
 func ConcurrentMap[K any, V any](in []K, f func(K) V) []V {
